@@ -50,6 +50,9 @@
 ;; - `map!' for binding new keys
 ;;
 ;;
+(setq mac-command-modifier 'meta)
+(setq mac-option-modifier 'super)
+
 (after! company
   (setq company-idle-delay 0.10))
 ;;
