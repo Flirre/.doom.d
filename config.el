@@ -25,7 +25,7 @@
        doom-big-font (font-spec :family "FantasqueSansMono Nerd Font" :size 22 )))
 
 (when (eq system-type 'gnu/linux)
- (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 22 )
+ (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 18 )
        doom-variable-pitch-font (font-spec :family "sans" :size 13)
        doom-big-font (font-spec :family "FantasqueSansMono Nerd Font" :size 22 )))
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -41,6 +41,8 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; Makes it so that no confirmation is needed to quit Emacs.
+(setq confirm-kill-emacs nil)
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
