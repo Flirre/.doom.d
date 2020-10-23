@@ -21,12 +21,10 @@
 ;; font string. You generally only need these two:
 (when (eq system-type 'darwin)
 (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 18 )
-       doom-variable-pitch-font (font-spec :family "sans" :size 13)
        doom-big-font (font-spec :family "FantasqueSansMono Nerd Font" :size 22 )))
 
 (when (eq system-type 'gnu/linux)
  (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 22 )
-       doom-variable-pitch-font (font-spec :family "sans" :size 13)
        doom-big-font (font-spec :family "FantasqueSansMono Nerd Font" :size 22 )))
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
