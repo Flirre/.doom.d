@@ -55,6 +55,9 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
 
+(after! doom-modeline
+  (setq doom-modeline-vcs-max-length 32))
+
 (after! company
   (setq company-idle-delay 0.10))
 ;;
