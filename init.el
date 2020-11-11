@@ -32,7 +32,7 @@
        (emoji +ascii +github +unicode)
        ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
-       (ligatures)
+       ligatures         ; ligatures and symbols to make your code pretty again
        ;;hydra
        indent-guides     ; highlighted indent columns
        ;;minimap           ; show a map of the code on the side
