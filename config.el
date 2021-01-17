@@ -3,7 +3,6 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Filip Lindahl"
@@ -54,6 +53,14 @@
 ;;
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
+
+;;(after! dimmer
+;;  (dimmer-configure-which-key)
+;;  (dimmer-configure-helm)
+;;  (dimmer-configure-magit)
+;;  (dimmer-configure-org)
+;;  (dimmer-configure-posframe)
+;;  (dimmer-mode t))
 
 (after! doom-modeline
   (setq doom-modeline-vcs-max-length 32))
