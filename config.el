@@ -82,3 +82,5 @@
 
 (map!
  "M-o" #'other-window)
+
+ (setq vterm-always-compile-module t)
