@@ -67,7 +67,8 @@
 
 (after! company
   (setq company-idle-delay 0.10))
-;;
+
+
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
@@ -84,6 +85,7 @@
  "M-o" #'other-window)
 
 (setq vterm-always-compile-module t)
+(setq display-line-numbers-type nil)
 (use-package! tree-sitter
   :config
   (require 'tree-sitter-langs)
