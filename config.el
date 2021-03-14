@@ -33,6 +33,13 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/agenda/")
+(setq org-archive-location "~/agenda/archives/%s_archive::")
+(setq org-deadline-warning-days 7)
+(setq org-agenda-time-leading-zero t)
+(setq calendar-left-margin 12)
+(setq org-todo-keywords
+'((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
+(setq org-startup-folded 'fold)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
