@@ -98,3 +98,7 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+(setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
+(setq-hook! 'js-mode-hook +format-with-lsp nil)
+(setq-hook! 'js2-mode-hook +format-with-lsp nil)
+(setq-hook! 'json-mode-hook +format-with-lsp nil)
