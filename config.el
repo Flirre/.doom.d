@@ -73,7 +73,7 @@
   (setq doom-modeline-vcs-max-length 32))
 
 (after! company
-  (setq company-idle-delay 0.10))
+  (setq company-idle-delay 0.08))
 
 
 ;; To get information about any of these functions/macros, move the cursor over
