@@ -75,6 +75,55 @@
 (after! company
   (setq company-idle-delay 0.08))
 
+(after! transient
+  (transient-define-prefix oht-transient-window ()
+    "Most commonly used window commands"
+    [["Splits"
+      ("s" "Horizontal" split-window-below)
+      ("v" "Vertical"   split-window-right)
+      ("b" "Balance"    balance-windows)
+      ("f" "Fit"        fit-window-to-buffer)]
+     ["Window"
+      ("c" "Clone Indirect" clone-indirect-buffer)
+      ("t" "Tear Off" tear-off-window)
+      ("k" "Kill" delete-window)
+      ("K" "Kill Buffer+Win"  kill-buffer-and-window)
+      ("o" "Kill Others"  delete-other-windows)
+      ("m" "Maximize" maximize-window)]
+     ["Navigate"
+      ("<left>"  "←" windmove-left  :transient t)
+      ("<right>" "→" windmove-right :transient t)
+      ("<up>"    "↑" windmove-up    :transient t)
+      ("<down>"  "↓" windmove-down  :transient t)]
+     ["Move"
+      ("S-<left>"  "S-←" buf-move-left  :transient t)
+      ("S-<right>" "S-→" buf-move-right :transient t)
+      ("S-<up>"    "S-↑" buf-move-up    :transient t)
+      ("S-<down>"  "S-↓" buf-move-down  :transient t)]
+     ["Undo/Redo"
+      ("s-z" "Winner Undo" winner-undo :transient t)
+      ("s-Z" "Winner Redo" winner-redo :transient t)]])
+
+  (transient-define-prefix oht-transient-help ()
+    "Transient for Helpful commands"
+    [[("p" "At Point" helpful-at-point)]
+     [("c" "Callable" helpful-callable)
+      ("f" "Function" helpful-function)
+      ("C" "Command" helpful-command)
+      ("v" "Variable" helpful-variable)
+      ("s" "Symbol" helpful-symbol)
+      ("M" "Macro" helpful-macro)
+      ("k" "Key" helpful-key)
+      ("m" "Mode" helpful-mode)]
+     [("u" "Update" helpful-update)
+      ("V" "Visit Reference" helpful-visit-reference)
+      ("K" "Kill Helpful Buffers" helpful-kill-buffers)]])
+  )
+
+(map!
+ :after transient
+ "C-h H"  #'oht-transient-help
+ "s-w" #'oht-transient-window)
 
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
