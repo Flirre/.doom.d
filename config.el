@@ -103,8 +103,5 @@
 (setq-hook! 'js2-mode-hook +format-with-lsp nil)
 (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
 (setq-hook! 'json-mode-hook +format-with-lsp nil)
-
-(setq flycheck-javascript-eslint-executable "eslint_d")
-(set-formatter! 'eslintd  "eslint_d --fix-to-stdout --stdin")
-(setq-hook! 'js2-mode-hook +format-with 'eslintd)
-(setq-hook! 'typescript-mode-hook +format-with 'eslintd)
+(add-hook! 'after-init-hook #'global-prettier-mode)
+(setq auth-sources '("~/.authinfo"))
