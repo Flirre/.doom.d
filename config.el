@@ -70,10 +70,9 @@
 ;;  (dimmer-mode t))
 
 (after! doom-modeline
-  (setq doom-modeline-vcs-max-length 32))
-
+  (setq doom-modeline-vcs-max-length 36))
 (after! company
-  (setq company-idle-delay 0.08))
+  (setq company-idle-delay 0.1))
 
 
 ;; To get information about any of these functions/macros, move the cursor over
