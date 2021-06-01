@@ -91,16 +91,13 @@
  "M-o" #'other-window)
 
 (setq vterm-always-compile-module t)
-(setq display-line-numbers-type nil)
-(use-package! tree-sitter
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
 (setq-hook! 'js-mode-hook +format-with-lsp nil)
 (setq-hook! 'js2-mode-hook +format-with-lsp nil)
 (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
 (setq-hook! 'json-mode-hook +format-with-lsp nil)
+
 (add-hook! 'after-init-hook #'global-prettier-mode)
 (setq auth-sources '("~/.authinfo"))
