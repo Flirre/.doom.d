@@ -50,3 +50,4 @@
 (package! tree-sitter)
 (package! tree-sitter-langs)
 (package! buffer-move)
+(package! prettier)

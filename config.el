@@ -70,10 +70,9 @@
 ;;  (dimmer-mode t))
 
 (after! doom-modeline
-  (setq doom-modeline-vcs-max-length 32))
-
+  (setq doom-modeline-vcs-max-length 36))
 (after! company
-  (setq company-idle-delay 0.08))
+  (setq company-idle-delay 0.1))
 
 (after! transient
   (transient-define-prefix oht-transient-window ()
@@ -141,19 +140,13 @@
  "M-o" #'other-window)
 
 (setq vterm-always-compile-module t)
-(setq display-line-numbers-type nil)
-(use-package! tree-sitter
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
 (setq-hook! 'js-mode-hook +format-with-lsp nil)
 (setq-hook! 'js2-mode-hook +format-with-lsp nil)
 (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
 (setq-hook! 'json-mode-hook +format-with-lsp nil)
 
-(setq flycheck-javascript-eslint-executable "eslint_d")
-(set-formatter! 'eslintd  "eslint_d --fix-to-stdout --stdin")
-(setq-hook! 'js2-mode-hook +format-with 'eslintd)
-(setq-hook! 'typescript-mode-hook +format-with 'eslintd)
+(add-hook! 'after-init-hook #'global-prettier-mode)
+(setq auth-sources '("~/.authinfo"))
