@@ -51,3 +51,4 @@
 (package! tree-sitter-langs)
 (package! buffer-move)
 (package! prettier)
+(package! dimmer)
