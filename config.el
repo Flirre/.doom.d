@@ -43,7 +43,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type nil)
 
 ;; Makes it so that no confirmation is needed to quit Emacs.
 (setq confirm-kill-emacs nil)
@@ -71,7 +71,7 @@
 (after! doom-modeline
   (setq doom-modeline-vcs-max-length 36))
 (after! company
-  (setq company-idle-delay 0.1))
+  (setq company-idle-delay 0.10))
 
 (after! transient
   (transient-define-prefix oht-transient-window ()
