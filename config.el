@@ -131,9 +131,12 @@
 ;; they are implemented.
 ;;
 ;; Override binding for C-s with helm-occur for convenience
+;; (map!
+;;  :after helm
+;;  "C-s" #'helm-occur)
 (map!
- :after helm
- "C-s" #'helm-occur)
+ :after ivy
+ "C-s" #'swiper)
 
 (map!
  "M-o" #'other-window)
