@@ -145,6 +145,11 @@
  "C-s" #'swiper)
 
 (map!
+ :after counsel
+ :map counsel-find-file-map
+ [return] #'ivy-alt-done)
+
+(map!
  "M-o" #'other-window)
 
 (setq vterm-always-compile-module t)
