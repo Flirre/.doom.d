@@ -19,16 +19,16 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (when (eq system-type 'darwin)
-  (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 18 )
-        doom-big-font (font-spec :family "FantasqueSansMono Nerd Font" :size 22 )))
+  (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 16 )
+        doom-big-font (font-spec :family "FantasqueSansMono Nerd Font" :size 20 )))
 
 (when (eq system-type 'gnu/linux)
-  (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 18 )
-        doom-big-font (font-spec :family "FantasqueSansMono Nerd Font" :size 22 )))
+  (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 16 )
+        doom-big-font (font-spec :family "FantasqueSansMono Nerd Font" :size 20 )))
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-molokai)
+(setq doom-theme 'doom-vibrant)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
