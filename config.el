@@ -41,6 +41,12 @@
       '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
 (setq org-startup-folded 'fold)
 
+(after! org
+  (setq org-fontify-done-headline t)
+  (custom-set-faces!
+    '(org-done :strike-through t)
+    '(org-headline-done :strike-through t)))
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type nil)
