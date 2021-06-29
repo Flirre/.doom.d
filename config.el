@@ -49,7 +49,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type nil)
+(setq display-line-numbers-type t)
 
 ;; Makes it so that no confirmation is needed to quit Emacs.
 (setq confirm-kill-emacs nil)
