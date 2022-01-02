@@ -77,7 +77,7 @@
 (after! doom-modeline
   (setq doom-modeline-vcs-max-length 36))
 (after! company
-  (setq company-idle-delay 0.10))
+  (setq company-idle-delay 0.05))
 
 (after! transient
   (transient-define-prefix oht-transient-window ()
@@ -155,11 +155,21 @@
 (setq vterm-always-compile-module t)
 (global-tree-sitter-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-(setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
-(setq-hook! 'js-mode-hook +format-with-lsp nil)
-(setq-hook! 'js2-mode-hook +format-with-lsp nil)
-(setq-hook! 'typescript-mode-hook +format-with-lsp nil)
-(setq-hook! 'json-mode-hook +format-with-lsp nil)
 
-(add-hook! 'after-init-hook #'global-prettier-mode)
 (setq auth-sources '("~/.authinfo"))
+
+(defun maybe-use-prettier ()
+  "Enable prettier-js-mode if an rc file is located."
+  (if (locate-dominating-file default-directory ".prettierrc.json")
+      (prettier-js-mode +1)))
+(add-hook 'typescript-mode-hook 'maybe-use-prettier)
+(add-hook 'js2-mode-hook 'maybe-use-prettier)
+(add-hook 'web-mode-hook 'maybe-use-prettier)
+(add-hook 'rjsx-mode-hook 'maybe-use-prettier)
+(add-hook 'json-mode-hook 'prettier-js-mode)
+
+(after! 'magit-mode
+  (add-hook! 'after-save-hook 'magit-after-save-refresh-status t))
+
+(after! lsp-ui
+  (setq lsp-ui-sideline-diagnostic-max-lines 2))

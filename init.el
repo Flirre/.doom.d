@@ -20,11 +20,11 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       ;;(company +childframe)            ; the ultimate code completion backend
-       ;;(helm +fuzzy +childframe)      ; the *other* search engine for love and life
-       ;;ido                            ; the other *other* search engine...
-       (ivy +childframe)                ; a search engine for love and life
-       (vertico +icons)                 ; the search engine of the future
+       (ivy +childframe +fuzzy +prescient +icons)                ; a search engine for love and life
+       ;;(vertico +icons)                 ; the search engine of the future
+       (company +childframe)                            ; the ultimate code completion backend
+       ;;(helm +fuzzy +childframe)                      ; the *other* search engine for love and life
+       ;;ido                                            ; the other *other* search engine...
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -43,7 +43,7 @@
        ophints             ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;tabs              ; a tab bar for Emacs
-       ;;treemacs          ; a project drawer, like neotree but cooler
+       treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        vc-gutter           ; vcs diff in the fringe
        vi-tilde-fringe     ; fringe tildes to mark beyond EOB
@@ -55,7 +55,7 @@
        ;;(evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       (format +onsave)  ; automated prettiness
+       (format)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
