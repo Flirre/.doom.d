@@ -136,23 +136,56 @@
  "M-o" #'other-window)
 
 (setq vterm-always-compile-module t)
+(map!
+ :map company-active-map
+ "<tab>" #'company-abort)
+
+(map!
+ :map global-map
+ "C-z" nil
+ "C-x C-z" nil)
+
 (global-tree-sitter-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
-(setq auth-sources '("~/.authinfo"))
+
 
 (defun maybe-use-prettier ()
   "Enable prettier-js-mode if an rc file is located."
   (if (locate-dominating-file default-directory ".prettierrc.json")
       (prettier-js-mode +1)))
 (add-hook 'typescript-mode-hook 'maybe-use-prettier)
+(add-hook 'typescript-tsx-mode-hook 'maybe-use-prettier)
 (add-hook 'js2-mode-hook 'maybe-use-prettier)
 (add-hook 'web-mode-hook 'maybe-use-prettier)
 (add-hook 'rjsx-mode-hook 'maybe-use-prettier)
 (add-hook 'json-mode-hook 'prettier-js-mode)
 
+(setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
+(setq-hook! 'rjsx-mode-hook flycheck-checker 'javascript-eslint)
+(setq-hook! 'typescript-mode-hook flycheck-checker 'javascript-eslint)
+(setq-hook! 'typescript-tsx-mode-hook flycheck-checker 'javascript-eslint)
 (after! 'magit-mode
   (add-hook! 'after-save-hook 'magit-after-save-refresh-status t))
 
 (after! lsp-ui
   (setq lsp-ui-sideline-diagnostic-max-lines 2))
+
+(after! projectile
+  (setq projectile-sort-order 'recently-active)
+  (projectile-register-project-type 'npm '("package.json")
+                                    :project-file "package.json"
+				    :compile "npm install"
+				    :test "npm test"
+				    :run "npm start"
+				    :test-suffix ".spec"))
+(use-package files
+  :defer t
+  :config
+  (setq confirm-kill-processes nil))
+
+(use-package paren
+  :defer t
+  :ensure nil
+  :init (setq show-paren-delay 0.1)
+  :config (show-paren-mode +1))
