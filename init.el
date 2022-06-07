@@ -43,7 +43,7 @@
        ophints             ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;tabs              ; a tab bar for Emacs
-       treemacs          ; a project drawer, like neotree but cooler
+       (treemacs +lsp)          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        vc-gutter           ; vcs diff in the fringe
        vi-tilde-fringe     ; fringe tildes to mark beyond EOB
@@ -68,8 +68,8 @@
        :emacs
        (dired +icons)             ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
-       ;;ibuffer         ; interactive buffer management
-       undo              ; persistent, smarter undo for your inevitable mistakes
+       (ibuffer +icons)         ; interactive buffer management
+       (undo +tree)              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 
        :term
@@ -85,7 +85,7 @@
 
        :tools
        ;;ansible
-       ;;debugger          ; FIXME stepping through code, to help you add bugs
+       (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
        editorconfig      ; let someone else argue about tabs vs spaces
@@ -143,11 +143,11 @@
        ;;lean
        ;;ledger            ; an accounting system in Emacs
        ;;lua               ; one-based indices? one-based indices
-       markdown            ; writing docs for people to ignore
+       (markdown +grip)            ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +babel +pandoc +pretty)       ; organize your plain life in plain text
+       (org +babel +dragndrop +pandoc +pretty)       ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
