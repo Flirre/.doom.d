@@ -70,13 +70,15 @@
 ;;
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
+(after! dimmer
+  :custom
+  (dimmer-configure-which-key)
+  (dimmer-configure-magit)
+  (dimmer-configure-org)
+  (dimmer-configure-posframe)
+  (dimmer-mode t))
 
- (dimmer-configure-which-key)
- (dimmer-configure-helm)
- (dimmer-configure-magit)
- (dimmer-configure-org)
- (dimmer-configure-posframe)
- (dimmer-mode t)
+
 
 (after! doom-modeline
   (setq doom-modeline-vcs-max-length 36))
