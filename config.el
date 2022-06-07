@@ -88,7 +88,8 @@
   (setq doom-modeline-percent-position nil))
 
 (after! company
-  (setq company-idle-delay 0.05))
+  :custom
+  (setq company-idle-delay 0.025))
 
 (after! transient
   (transient-define-prefix oht-transient-window ()
