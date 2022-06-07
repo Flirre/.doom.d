@@ -8,6 +8,8 @@
 (setq user-full-name "Filip Lindahl"
       user-mail-address "filip.g.lindahl@gmail.com")
 
+(setq auth-sources '("~/.authinfo"))
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
