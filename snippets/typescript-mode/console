@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: console.log
+# key: console
+# condition: t
+# --
+console.log('`(f-base buffer-file-name)` => ', $0);
