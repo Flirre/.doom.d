@@ -81,7 +81,12 @@
 
 
 (after! doom-modeline
-  (setq doom-modeline-vcs-max-length 36))
+  :custom
+  (setq doom-modeline-vcs-max-length 36)
+  (setq doom-modeline-buffer-encoding nil)
+  (setq doom-modeline-buffer-file-name-style 'truncate-all)
+  (setq doom-modeline-percent-position nil))
+
 (after! company
   (setq company-idle-delay 0.05))
 
