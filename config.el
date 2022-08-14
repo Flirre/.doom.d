@@ -143,7 +143,9 @@
  :map global-map
  "<backtab>" #'company-capf
  "C-z" nil
- "C-x C-z" nil)
+ "C-x C-z" nil
+ "<XF86Launch9> r" #'undo-tree-redo
+ "<XF86Launch9> u" #'undo-tree-undo)
 
 
 
