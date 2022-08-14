@@ -131,11 +131,11 @@
        ;;(fsharp +lsp)            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        (gdscript +lsp)          ; the language you waited for
-       (go +lsp +tree-sitter)         ; the hipster dialect
+       ;(go +lsp +tree-sitter)         ; the hipster dialect
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
-       (java +lsp +tree-sitter) ; the poster child for carpal tunnel syndrome
+       ;(java +lsp +tree-sitter) ; the poster child for carpal tunnel syndrome
        (json +lsp +tree-sitter)              ; At least it ain't XML
        (javascript +lsp +tree-sitter)        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
@@ -160,7 +160,7 @@
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;;scala             ; java, but good
+       (scala +lsp +tree-sitter)             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
        (sh +lsp +fish +tree-sitter)     ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
@@ -187,3 +187,5 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+(setenv "LSP_USE_PLISTS" "1")
