@@ -143,7 +143,9 @@
 (map!
  :map global-map
  "C-z" nil
- "C-x C-z" nil)
+ "C-x C-z" nil
+ "<XF86Launch9> r" #'undo-tree-redo
+ "<XF86Launch9> u" #'undo-tree-undo)
 
 (global-tree-sitter-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
