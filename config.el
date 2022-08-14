@@ -21,7 +21,7 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (when (eq system-type 'darwin)
-  (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 16 )
+  (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 18 )
         doom-big-font (font-spec :family "VictorMono Nerd Font" :size 20 )))
 
 (when (eq system-type 'gnu/linux)
@@ -38,15 +38,16 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/agenda/")
 (setq org-archive-location "~/agenda/archives/%s_archive::")
-(setq org-deadline-warning-days 7)
-(setq org-agenda-time-leading-zero t)
-(setq calendar-left-margin 12)
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
-(setq org-startup-folded 'fold)
 
 (after! org
+  :custom
   (setq org-fontify-done-headline t)
+  (setq org-deadline-warning-days 7)
+  (setq org-agenda-time-leading-zero t)
+  (setq calendar-left-margin 12)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
+  (setq org-startup-folded 'fold)
   (custom-set-faces!
     '(org-done :strike-through t)
     '(org-headline-done :strike-through t)))
@@ -68,8 +69,6 @@
 ;; - `map!' for binding new keys
 ;;
 ;;
-(setq mac-command-modifier 'meta)
-(setq mac-option-modifier 'super)
 (after! dimmer
   :custom
   (dimmer-configure-which-key)
@@ -135,18 +134,16 @@
 (map!
  "M-o" #'other-window)
 
-(setq vterm-always-compile-module t)
 (map!
  :map company-active-map
+ "TAB" #'company-abort
  "<tab>" #'company-abort)
 
 (map!
  :map global-map
+ "<backtab>" #'company-capf
  "C-z" nil
  "C-x C-z" nil)
-
-(global-tree-sitter-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 
 
@@ -168,6 +165,9 @@
 (after! 'magit-mode
   (add-hook! 'after-save-hook 'magit-after-save-refresh-status t))
 
+(after! lsp
+  (setq +lsp-company-backends '(:separate company-capf)))
+
 (after! lsp-ui
   (setq lsp-ui-sideline-diagnostic-max-lines 2))
 
@@ -179,6 +179,21 @@
 				    :test "npm test"
 				    :run "npm start"
 				    :test-suffix ".spec"))
+
+(when (eq system-type 'darwin)
+  (setq
+   ns-command-modifier 'control
+   ns-option-modifier 'meta
+   ns-control-modifier 'control
+   ns-function-modifier 'hyper)
+  (map!
+   "M-8" (lambda () (interactive) (insert "["))
+   "M-9" (lambda () (interactive) (insert "]"))
+   "M-(" (lambda () (interactive) (insert "{"))
+   "M-)" (lambda () (interactive) (insert "}"))))
+(after! treemacs
+  (setq treemacs-git-mode 'deferred))
+
 (use-package files
   :defer t
   :config
