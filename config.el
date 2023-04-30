@@ -69,13 +69,13 @@
 ;; - `map!' for binding new keys
 ;;
 ;;
+(dimmer-mode t)
 (after! dimmer
   :custom
   (dimmer-configure-which-key)
   (dimmer-configure-magit)
   (dimmer-configure-org)
-  (dimmer-configure-posframe)
-  (dimmer-mode t))
+  (dimmer-configure-posframe))
 
 
 
@@ -88,7 +88,10 @@
 
 (after! company
   :custom
-  (setq company-idle-delay 0.025))
+  (setq company-idle-delay 0.750))
+
+(after! company-box
+  (setq company-box-doc-delay 0))
 
 (after! transient
   :custom
@@ -109,7 +112,8 @@
 
 (map!
  :after transient
- "C-h H"  #'oht-transient-help)
+ "C-h H"  #'oht-transient-help
+ "C-h h"  #'oht-transient-help)
 
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
@@ -144,43 +148,23 @@
  "<backtab>" #'company-capf
  "C-z" nil
  "C-x C-z" nil
+ "<f18> r" #'undo-tree-redo
+ "<f18> u" #'undo-tree-undo
  "<XF86Launch9> r" #'undo-tree-redo
  "<XF86Launch9> u" #'undo-tree-undo)
 
+(add-hook! 'typescript-mode-hook 'prettier-js-mode)
+(add-hook! 'typescript-tsx-mode-hook 'prettier-js-mode)
+(add-hook! 'js2-mode-hook 'prettier-js-mode)
+(add-hook! 'web-mode-hook 'prettier-js-mode)
+(add-hook! 'rjsx-mode-hook 'prettier-js-mode)
+(add-hook! 'json-mode-hook 'prettier-js-mode)
 
-
-(defun maybe-use-prettier ()
-  "Enable prettier-js-mode if an rc file is located."
-  (if (locate-dominating-file default-directory ".prettierrc.json")
-      (prettier-js-mode +1)))
-(add-hook 'typescript-mode-hook 'maybe-use-prettier)
-(add-hook 'typescript-tsx-mode-hook 'maybe-use-prettier)
-(add-hook 'js2-mode-hook 'maybe-use-prettier)
-(add-hook 'web-mode-hook 'maybe-use-prettier)
-(add-hook 'rjsx-mode-hook 'maybe-use-prettier)
-(add-hook 'json-mode-hook 'prettier-js-mode)
-
-(setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
-(setq-hook! 'rjsx-mode-hook flycheck-checker 'javascript-eslint)
-(setq-hook! 'typescript-mode-hook flycheck-checker 'javascript-eslint)
-(setq-hook! 'typescript-tsx-mode-hook flycheck-checker 'javascript-eslint)
 (after! 'magit-mode
   (add-hook! 'after-save-hook 'magit-after-save-refresh-status t))
 
-(after! lsp
-  (setq +lsp-company-backends '(:separate company-capf)))
-
 (after! lsp-ui
   (setq lsp-ui-sideline-diagnostic-max-lines 2))
-
-(after! projectile
-  (setq projectile-sort-order 'recently-active)
-  (projectile-register-project-type 'npm '("package.json")
-                                    :project-file "package.json"
-				    :compile "npm install"
-				    :test "npm test"
-				    :run "npm start"
-				    :test-suffix ".spec"))
 
 (when (eq system-type 'darwin)
   (setq
@@ -193,6 +177,12 @@
    "M-9" (lambda () (interactive) (insert "]"))
    "M-(" (lambda () (interactive) (insert "{"))
    "M-)" (lambda () (interactive) (insert "}"))))
+
+;; A GitHub username for API authentication
+(setq grip-github-user "flirre")
+;; A GitHub password or auth token for API auth
+;; (setq grip-github-password "password")
+
 (after! treemacs
   (setq treemacs-git-mode 'deferred))
 
@@ -206,3 +196,38 @@
   :ensure nil
   :init (setq show-paren-delay 0.1)
   :config (show-paren-mode +1))
+
+(setq flycheck-javascript-eslint-executable "eslint_d")
+(setq prettier-js-command "prettier_d_slim")
+
+(setq eslintd-fix-executable "eslint_d")
+
+(add-hook 'typescript-tsx-mode-hook 'eslintd-fix-mode)
+(add-hook 'typescript-mode-hook 'eslintd-fix-mode)
+(add-hook 'web-mode-hook 'eslintd-fix-mode)
+
+(setq magit-process-finish-apply-ansi-colors t)
+(setq magit-process-popup-time 0)
+
+(setq-hook! 'typescript-mode-hook +format-with-lsp nil)
+(setq-hook! 'javascript-mode-hook +format-with-lsp nil)
+(setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
+
+
+;; Function that tries to auto-expand YaSnippets
+(after! yasnippet
+  (defun my-yas-try-expanding-auto-snippets ()
+    (when yas-minor-mode
+      (let ((yas-buffer-local-condition ''(require-snippet-condition . auto)))
+        (yas-expand))))
+  (add-hook 'post-command-hook #'my-yas-try-expanding-auto-snippets))
+
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
+         ("C-<tab>" . 'copilot-accept-completion-by-word)
+         :map copilot-completion-map
+         ("<tab>" . 'copilot-accept-completion)
+         ("TAB" . 'copilot-accept-completion)))
