@@ -37,7 +37,7 @@
        ;;indent-guides     ; highlighted indent columns
        ligatures           ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
-       modeline            ; snazzy, Atom-inspired modeline, plus API
+       (modeline +light)            ; snazzy, Atom-inspired modeline, plus API
        nav-flash           ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints             ; highlight the region an operation acts on
@@ -86,8 +86,8 @@
        :tools
        ;;ansible
        (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
-       ;;direnv
-       (docker +lsp)
+       direnv
+       ;;(docker +lsp)
        editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
@@ -130,7 +130,7 @@
        ;;faust             ; dsp, but you get to keep your soul
        ;;(fsharp +lsp)            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
-       (gdscript +lsp)          ; the language you waited for
+       ;(gdscript +lsp)          ; the language you waited for
        ;(go +lsp +tree-sitter)         ; the hipster dialect
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
@@ -148,26 +148,26 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +babel +dragndrop +pandoc +pretty)       ; organize your plain life in plain text
+       ;;(org +babel +dragndrop +pandoc +pretty)       ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +conda +lsp +tree-sitter)            ; beautiful is better than ugly
+       ;;(python +conda +lsp +tree-sitter)            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
-       (rest +jq)                ; Emacs as a REST client
+       ;;(rest +jq)                ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        (scala +lsp +tree-sitter)             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       (sh +lsp +fish +tree-sitter)     ; she sells {ba,z,fi}sh shells on the C xor
+       ;(sh +lsp +fish +tree-sitter)     ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
-       (web +html +css +lsp +tree-sitter)  ; the tubes
+       ;;(web +html +css +lsp +tree-sitter)  ; the tubes
        (yaml +lsp)         ; JSON, but readable
        ;;zig               ; C, but simpler
 
@@ -188,4 +188,3 @@
        ;;literate
        (default +bindings +smartparens))
 
-(setenv "LSP_USE_PLISTS" "1")

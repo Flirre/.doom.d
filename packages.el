@@ -50,3 +50,6 @@
 (package! buffer-move)
 (package! dimmer)
 (package! prettier-js)
+(package! eslintd-fix)
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
