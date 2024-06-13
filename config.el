@@ -10,27 +10,39 @@
 
 (setq auth-sources '("~/.authinfo"))
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-(when (eq system-type 'darwin)
-  (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 18 )
-        doom-big-font (font-spec :family "VictorMono Nerd Font" :size 20 )))
+(setq nice-fonts '("VictorMono Nerd Font" "JetBrainsMono Nerd Font" "FantasqueSansM Nerd Font" "CaskaydiaCove Nerd Font" "ComicShannsMono Nerd Font" "Iosevka Nerd Font" "Monofur Nerd Font" "OpenDyslexic Nerd Font"))
+(setq font-sizes '(("VictorMono Nerd Font" . 18) ("JetBrainsMono Nerd Font" . 18) ("FantasqueSansM Nerd Font" . 18) ("CaskaydiaCove Nerd Font" . 18) ("ComicShannsMono Nerd Font" . 18) ("Iosevka Nerd Font" . 18) ("Monofur Nerd Font" . 18) ("OpenDyslexic Nerd Font" . 17)))
+(setq font-sizes-big '(("VictorMono Nerd Font" . 20) ("JetBrainsMono Nerd Font" . 20) ("FantasqueSansM Nerd Font" . 20) ("CaskaydiaCove Nerd Font" . 20) ("ComicShannsMono Nerd Font" . 20) ("Iosevka Nerd Font" . 20) ("Monofur Nerd Font" . 20) ("OpenDyslexic Nerd Font" . 19)))
+(setq nice-font (seq-random-elt nice-fonts))
+(setq nice-font-size (cdr (assoc nice-font font-sizes)))
+(setq nice-font-size-big (cdr (assoc nice-font font-sizes-big)))
 
-(when (eq system-type 'gnu/linux)
-  (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 18 )
-        doom-big-font (font-spec :family "VictorMono Nerd Font" :size 20 )))
+(setq nice-themes '(doom-bluloco-light doom-nord-aurora))
+(setq nice-theme (seq-random-elt nice-themes))
+
+(defun randomize-theme-and-font ()
+  (interactive)
+  (setq nice-font (seq-random-elt nice-fonts))
+  (setq nice-font-size (cdr (assoc nice-font font-sizes)))
+  (setq nice-font-size-big (cdr (assoc nice-font font-sizes-big)))
+  (setq nice-theme (seq-random-elt nice-themes))
+  (setq doom-font (font-spec :family nice-font :size nice-font-size))
+  (setq doom-big-font (font-spec :family nice-font :size nice-font-size-big))
+  (setq doom-theme nice-theme)
+  (load-theme nice-theme t)
+  (message "Randomized theme and font to %s %s" nice-theme nice-font)
+  (set-frame-font nice-font))
+
+
+(setq doom-font (font-spec :family nice-font :size nice-font-size)
+      doom-big-font (font-spec :family nice-font :size nice-font-size-big))
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-vibrant)
+                                        ;(setq doom-theme nice-theme)
+                                        ;(setq doom-theme 'doom-nord-aurora)
+;;(setq doom-theme 'doom-bluloco-light)
+(setq doom-theme nice-theme)
 (setq fancy-splash-image "~/.doom.d/splash/doomEmacsDoomOne.svg")
 
 
@@ -88,10 +100,10 @@
 
 (after! company
   :custom
-  (setq company-idle-delay 0.750))
+  (setq company-idle-delay 0.250))
 
 (after! company-box
-  (setq company-box-doc-delay 0))
+  (setq company-box-doc-delay 0.1))
 
 (after! transient
   :custom
@@ -148,17 +160,11 @@
  "<backtab>" #'company-capf
  "C-z" nil
  "C-x C-z" nil
+ "C-c r" #'randomize-theme-and-font
  "<f18> r" #'undo-tree-redo
  "<f18> u" #'undo-tree-undo
  "<XF86Launch9> r" #'undo-tree-redo
  "<XF86Launch9> u" #'undo-tree-undo)
-
-(add-hook! 'typescript-mode-hook 'prettier-js-mode)
-(add-hook! 'typescript-tsx-mode-hook 'prettier-js-mode)
-(add-hook! 'js2-mode-hook 'prettier-js-mode)
-(add-hook! 'web-mode-hook 'prettier-js-mode)
-(add-hook! 'rjsx-mode-hook 'prettier-js-mode)
-(add-hook! 'json-mode-hook 'prettier-js-mode)
 
 (after! 'magit-mode
   (add-hook! 'after-save-hook 'magit-after-save-refresh-status t))
@@ -198,13 +204,6 @@
   :config (show-paren-mode +1))
 
 (setq flycheck-javascript-eslint-executable "eslint_d")
-(setq prettier-js-command "prettier_d_slim")
-
-(setq eslintd-fix-executable "eslint_d")
-
-(add-hook 'typescript-tsx-mode-hook 'eslintd-fix-mode)
-(add-hook 'typescript-mode-hook 'eslintd-fix-mode)
-(add-hook 'web-mode-hook 'eslintd-fix-mode)
 
 (setq magit-process-finish-apply-ansi-colors t)
 (setq magit-process-popup-time 0)
@@ -231,3 +230,19 @@
          :map copilot-completion-map
          ("<tab>" . 'copilot-accept-completion)
          ("TAB" . 'copilot-accept-completion)))
+
+
+(defun kill-echo-area ()
+  "Save the content of the echo area into the `kill-ring'."
+  (interactive)
+  (kill-new (with-current-buffer " *Echo Area 0*"
+              (save-restriction
+                (widen)
+                (buffer-substring-no-properties (point-min) (point-max))))))
+(map!
+ :map typescript-mode-map
+ :map typescript-tsx-mode-map
+ :map rjsx-mode-map
+ :map js2-mode-map
+ :map web-mode-map
+ "C-:" #'kill-echo-area)
