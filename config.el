@@ -188,6 +188,7 @@
    ns-control-modifier 'control
    ns-function-modifier 'hyper)
   (map!
+   "M-7" (lambda () (interactive) (insert "|"))
    "M-8" (lambda () (interactive) (insert "["))
    "M-9" (lambda () (interactive) (insert "]"))
    "M-(" (lambda () (interactive) (insert "{"))
