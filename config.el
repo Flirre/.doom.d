@@ -10,14 +10,14 @@
 
 (setq auth-sources '("~/.authinfo"))
 
-(setq nice-fonts '("VictorMono Nerd Font" "JetBrainsMono Nerd Font" "FantasqueSansM Nerd Font" "CaskaydiaCove Nerd Font" "ComicShannsMono Nerd Font" "Iosevka Nerd Font" "Monofur Nerd Font" "OpenDyslexic Nerd Font"))
-(setq font-sizes '(("VictorMono Nerd Font" . 18) ("JetBrainsMono Nerd Font" . 18) ("FantasqueSansM Nerd Font" . 18) ("CaskaydiaCove Nerd Font" . 18) ("ComicShannsMono Nerd Font" . 18) ("Iosevka Nerd Font" . 18) ("Monofur Nerd Font" . 18) ("OpenDyslexic Nerd Font" . 17)))
-(setq font-sizes-big '(("VictorMono Nerd Font" . 20) ("JetBrainsMono Nerd Font" . 20) ("FantasqueSansM Nerd Font" . 20) ("CaskaydiaCove Nerd Font" . 20) ("ComicShannsMono Nerd Font" . 20) ("Iosevka Nerd Font" . 20) ("Monofur Nerd Font" . 20) ("OpenDyslexic Nerd Font" . 19)))
+(setq nice-fonts '("VictorMono Nerd Font" "JetBrainsMono Nerd Font" "FantasqueSansM Nerd Font" "CaskaydiaCove Nerd Font" "ComicShannsMono Nerd Font" "Iosevka Nerd Font" "Monofur Nerd Font"))
+(setq font-sizes '(("VictorMono Nerd Font" . 21) ("JetBrainsMono Nerd Font" . 21) ("FantasqueSansM Nerd Font" . 21) ("CaskaydiaCove Nerd Font" . 21) ("ComicShannsMono Nerd Font" . 21) ("Iosevka Nerd Font" . 21) ("Monofur Nerd Font" . 21)))
+(setq font-sizes-big '(("VictorMono Nerd Font" . 28) ("JetBrainsMono Nerd Font" . 28) ("FantasqueSansM Nerd Font" . 28) ("CaskaydiaCove Nerd Font" . 28) ("ComicShannsMono Nerd Font" . 28) ("Iosevka Nerd Font" . 28) ("Monofur Nerd Font" . 28)))
 (setq nice-font (seq-random-elt nice-fonts))
 (setq nice-font-size (cdr (assoc nice-font font-sizes)))
 (setq nice-font-size-big (cdr (assoc nice-font font-sizes-big)))
 
-(setq nice-themes '(doom-bluloco-light doom-nord-aurora))
+(setq nice-themes '(doom-bluloco-light doom-nord-aurora doom-oksolar-light doom-outrun-electric doom-laserwave doom-miramare doom-monokai-ristretto))
 (setq nice-theme (seq-random-elt nice-themes))
 
 (defun randomize-theme-and-font ()
@@ -203,14 +203,13 @@
   :init (setq show-paren-delay 0.1)
   :config (show-paren-mode +1))
 
-(setq flycheck-javascript-eslint-executable "eslint_d")
-
 (setq magit-process-finish-apply-ansi-colors t)
 (setq magit-process-popup-time 0)
 
 (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
 (setq-hook! 'javascript-mode-hook +format-with-lsp nil)
 (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
+(setq-hook! 'json-mode-hook +format-with-lsp nil)
 
 
 ;; Function that tries to auto-expand YaSnippets
