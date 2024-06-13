@@ -290,3 +290,9 @@
 ;; kill the fill-column-indicator line
 (setq global-display-fill-column-indicator-mode nil);
 
+(after! apheleia
+  (set-formatter! 'prettier
+    '("apheleia-npx" "prettier" "--stdin-filepath" filepath)
+    :modes '(typescript-mode rjsx-mode js2-mode web-mode json-mode typescript-tsx-mode typescript-ts-mode js-mode))
+  (setq apheleia-formatters-respect-indent-level nil)
+  (setq apheleia-formatters-respect-fill-column nil))
