@@ -169,6 +169,9 @@
 (after! 'magit-mode
   (add-hook! 'after-save-hook 'magit-after-save-refresh-status t))
 
+(after! lsp
+  (setq lsp-auto-execute-action nil))
+
 (after! lsp-ui
   (setq lsp-ui-sideline-diagnostic-max-lines 2))
 
