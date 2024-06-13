@@ -173,7 +173,13 @@
   (setq lsp-auto-execute-action nil))
 
 (after! lsp-ui
-  (setq lsp-ui-sideline-diagnostic-max-lines 2))
+  (setq lsp-ui-sideline-diagnostic-max-lines 2)
+  (setq lsp-ui-doc-use-webkit t)
+  (setq lsp-headerline-breadcrumb-enable t)
+  (setq lsp-headerline-breadcrumb-segments '(file symbols))
+  :map lsp-ui-mode-map
+  "C-<" #'lsp-ui-doc-show
+  "C->" #'lsp-ui-doc-hide)
 
 (when (eq system-type 'darwin)
   (setq
