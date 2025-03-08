@@ -3,11 +3,11 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
+;; clients, file templates and snippets. It is optional.
 (setq user-full-name "Filip Lindahl"
       user-mail-address "filip.g.lindahl@gmail.com")
-
 (setq auth-sources '("~/.authinfo"))
 
 (setq nice-fonts '("VictorMono Nerd Font" "JetBrainsMono Nerd Font" "FantasqueSansM Nerd Font" "CaskaydiaCove Nerd Font" "ComicShannsMono Nerd Font" "Iosevka Nerd Font" "Monofur Nerd Font"))
@@ -31,7 +31,8 @@
   (setq doom-theme nice-theme)
   (load-theme nice-theme t)
   (message "Randomized theme and font to %s %s" nice-theme nice-font)
-  (set-frame-font nice-font))
+  (set-frame-font nice-font)
+  (doom/reload-font))
 
 
 (setq doom-font (font-spec :family nice-font :size nice-font-size)
@@ -45,32 +46,54 @@
 (setq doom-theme nice-theme)
 (setq fancy-splash-image "~/.doom.d/splash/doomEmacsDoomOne.svg")
 
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
+;;
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-symbol-font' -- for symbols
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+;;
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/agenda/")
-(setq org-archive-location "~/agenda/archives/%s_archive::")
-
-(after! org
-  :custom
-  (setq org-fontify-done-headline t)
-  (setq org-deadline-warning-days 7)
-  (setq org-agenda-time-leading-zero t)
-  (setq calendar-left-margin 12)
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
-  (setq org-startup-folded 'fold)
-  (custom-set-faces!
-    '(org-done :strike-through t)
-    '(org-headline-done :strike-through t)))
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+(setq doom-theme 'doom-one)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
-;; Makes it so that no confirmation is needed to quit Emacs.
-(setq confirm-kill-emacs nil)
-;; Here are some additional functions/macros that could help you configure Doom:
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
+
+
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+;;
+;;   (after! PACKAGE
+;;     (setq x y))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package!' for configuring packages
@@ -80,183 +103,55 @@
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
 ;;
-;;
-(dimmer-mode t)
-(after! dimmer
-  :custom
-  (dimmer-configure-which-key)
-  (dimmer-configure-magit)
-  (dimmer-configure-org)
-  (dimmer-configure-posframe))
-
-
-
-(after! doom-modeline
-  :custom
-  (setq doom-modeline-vcs-max-length 36)
-  (setq doom-modeline-buffer-encoding nil)
-  (setq doom-modeline-buffer-file-name-style 'truncate-all)
-  (setq doom-modeline-percent-position nil))
-
-(after! company
-  :custom
-  (setq company-idle-delay 0.250))
-
-(after! company-box
-  (setq company-box-doc-delay 0.1))
-
-(after! transient
-  :custom
-  (transient-define-prefix oht-transient-help ()
-    "Transient for Helpful commands"
-    [[("p" "At Point" helpful-at-point)]
-     [("c" "Callable" helpful-callable)
-      ("f" "Function" helpful-function)
-      ("C" "Command" helpful-command)
-      ("v" "Variable" helpful-variable)
-      ("s" "Symbol" helpful-symbol)
-      ("M" "Macro" helpful-macro)
-      ("k" "Key" helpful-key)
-      ("m" "Mode" helpful-mode)]
-     [("u" "Update" helpful-update)
-      ("V" "Visit Reference" helpful-visit-reference)
-      ("K" "Kill Helpful Buffers" helpful-kill-buffers)]]))
-
-(map!
- :after transient
- "C-h H"  #'oht-transient-help
- "C-h h"  #'oht-transient-help)
-
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-;;
-;; Override binding for C-s with helm-occur for convenience
-;; (map!
-;;  :after helm
-;;  "C-s" #'helm-occur)
-(map!
- :after ivy
- "C-s" #'swiper)
-
-(map!
- :after counsel
- :map counsel-find-file-map
- [return] #'ivy-alt-done)
-
-(map!
- "M-o" #'other-window)
-
-(map!
- :map company-active-map
- "TAB" #'company-abort
- "<tab>" #'company-abort)
-
-(map!
- :map global-map
- "<backtab>" #'company-capf
- "C-z" nil
- "C-x C-z" nil
- "C-c r" #'randomize-theme-and-font
- "<f18> r" #'undo-tree-redo
- "<f18> u" #'undo-tree-undo
- "<XF86Launch9> r" #'undo-tree-redo
- "<XF86Launch9> u" #'undo-tree-undo)
-
-(after! 'magit-mode
-  (add-hook! 'after-save-hook 'magit-after-save-refresh-status t))
-
-(after! lsp
-  (setq lsp-auto-execute-action nil))
-
-(after! lsp-ui
-  (setq lsp-ui-sideline-diagnostic-max-lines 2)
-  (setq lsp-ui-doc-use-webkit t)
-  (setq lsp-headerline-breadcrumb-enable t)
-  (setq lsp-headerline-breadcrumb-segments '(file symbols))
-  :map lsp-ui-mode-map
-  "C-<" #'lsp-ui-doc-show
-  "C->" #'lsp-ui-doc-hide)
-
 (when (eq system-type 'darwin)
   (setq
-   ns-command-modifier 'control
-   ns-option-modifier 'meta
-   ns-control-modifier 'control
-   ns-function-modifier 'hyper)
+   mac-command-modifier 'control
+   mac-option-modifier 'meta
+   mac-control-modifier 'control
+   mac-function-modifier 'hyper)
   (map!
    "M-7" (lambda () (interactive) (insert "|"))
    "M-8" (lambda () (interactive) (insert "["))
    "M-9" (lambda () (interactive) (insert "]"))
    "M-(" (lambda () (interactive) (insert "{"))
-   "M-)" (lambda () (interactive) (insert "}"))))
+   "M-)" (lambda () (interactive) (insert "}"))
+                                        ;"C-x M-(" 'shrink-window-horizontally
+                                        ;"C-x M-)" 'enlarge-window-horizontally
+   ))
 
-;; A GitHub username for API authentication
-(setq grip-github-user "flirre")
-;; A GitHub password or auth token for API auth
-;; (setq grip-github-password "password")
+(map!
+ :map global-map
+ "C-z" nil
+ "C-x C-z" nil
+ "C-c r" #'randomize-theme-and-font
+ "<f19>" #'undo-tree-redo
+ "<f18>" #'undo-tree-undo
+ "<XF86Launch9> r" #'undo-tree-redo
+ "<XF86Launch9> u" #'undo-tree-undo
+ "M-o" #'other-window)
 
-(after! treemacs
-  (setq treemacs-git-mode 'deferred))
-
-(use-package files
-  :defer t
-  :config
-  (setq confirm-kill-processes nil))
-
-(use-package paren
-  :defer t
-  :ensure nil
-  :init (setq show-paren-delay 0.1)
-  :config (show-paren-mode +1))
-
-(setq magit-process-finish-apply-ansi-colors t)
-(setq magit-process-popup-time 0)
-
-(setq-hook! 'typescript-mode-hook +format-with-lsp nil)
-(setq-hook! 'javascript-mode-hook +format-with-lsp nil)
-(setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
-(setq-hook! 'json-mode-hook +format-with-lsp nil)
-
-
-;; Function that tries to auto-expand YaSnippets
-(after! yasnippet
-  (defun my-yas-try-expanding-auto-snippets ()
-    (when yas-minor-mode
-      (let ((yas-buffer-local-condition ''(require-snippet-condition . auto)))
-        (yas-expand))))
-  (add-hook 'post-command-hook #'my-yas-try-expanding-auto-snippets))
-
+(setq confirm-kill-emacs nil)
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
-  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
-         ("C-<tab>" . 'copilot-accept-completion-by-word)
-         :map copilot-completion-map
-         ("<tab>" . 'copilot-accept-completion)
-         ("TAB" . 'copilot-accept-completion)))
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("<backtab>" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
-
-(defun kill-echo-area ()
-  "Save the content of the echo area into the `kill-ring'."
-  (interactive)
-  (kill-new (with-current-buffer " *Echo Area 0*"
-              (save-restriction
-                (widen)
-                (buffer-substring-no-properties (point-min) (point-max))))))
-(map!
- :map typescript-mode-map
- :map typescript-tsx-mode-map
- :map rjsx-mode-map
- :map js2-mode-map
- :map web-mode-map
- "C-:" #'kill-echo-area
- "C-<" #'lsp-ui-doc-show
- "C->" #'lsp-ui-doc-hide)
+(use-package! copilot-chat
+  :custom (setq copilot-chat-model "claude-3.7-sonnet"))
 
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json."
@@ -287,8 +182,29 @@
       orig-result)))
 (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
-;; kill the fill-column-indicator line
-(setq global-display-fill-column-indicator-mode nil);
+;; LSP-mode: How do I force lsp-mode to forget the workspace folders for multi root servers so the workspace folders are added on demand?
+;; https://emacs-lsp.github.io/lsp-mode/page/faq/#how-do-i-force-lsp-mode-to-forget-the-workspace-folders-for-multi-root-servers-so-the-workspace-folders-are-added-on-demand
+(advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
+
+
+(setq shell-file-name (executable-find "bash"))
+(setq-default vterm-shell (executable-find "fish"))
+(use-package! drag-stuff
+  :defer t
+  :init
+  (map! "M-<up>" #'drag-stuff-up
+        "M-<down>" #'drag-stuff-down
+        "M-<left>" #'drag-stuff-left
+        "M-<right>" #'drag-stuff-right))
+
+(setq which-key-max-description-length nil)
+
+
+(setq shell-file-name (executable-find "bash"))
+(setq-default vterm-shell (executable-find "fish"))
+
+(setq-default explicit-shell-file-name (executable-find "fish"))
+
 
 (after! apheleia
   (set-formatter! 'prettier
@@ -296,3 +212,11 @@
     :modes '(typescript-mode rjsx-mode js2-mode web-mode json-mode typescript-tsx-mode typescript-ts-mode js-mode))
   (setq apheleia-formatters-respect-indent-level nil)
   (setq apheleia-formatters-respect-fill-column nil))
+
+(defun kill-echo-area ()
+  "Save the content of the echo area into the `kill-ring'."
+  (interactive)
+  (kill-new (with-current-buffer " *Echo Area 0*"
+              (save-restriction
+                (widen)
+                (buffer-substring-no-properties (point-min) (point-max))))))
