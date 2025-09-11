@@ -69,7 +69,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -138,20 +138,21 @@
  "<XF86Launch9> u" #'undo-tree-undo
  "M-o" #'other-window)
 
+(map!
+ :map corfu-mode-map
+ ("<backtab>" 'corfu-complete))
+
 (setq confirm-kill-emacs nil)
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
-  :hook (prog-mode . copilot-mode)
+                                        ;:hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("<backtab>" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+              ("TAB" . 'copilot-accept-completion)))
 
-(use-package! copilot-chat
-  :custom (setq copilot-chat-model "claude-3.7-sonnet"))
+;; (use-package! copilot-chat
+;;   :custom (setq copilot-chat-model "gemini-2.5-pro"))
 
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json."
@@ -220,3 +221,38 @@
               (save-restriction
                 (widen)
                 (buffer-substring-no-properties (point-min) (point-max))))))
+
+(setq lsp-file-watch-threshold nil)
+
+
+
+(after! marginalia
+  ;; Function to get git branch for a project
+  (defun doom-get-project-git-branch (project)
+    "Get the current git branch for PROJECT."
+    (let ((default-directory project))
+      (when (file-exists-p (expand-file-name ".git" project))
+        (condition-case nil
+            (string-trim (shell-command-to-string "git rev-parse --abbrev-ref HEAD 2>/dev/null"))
+          (error "")))))
+
+  ;; Enhanced project file annotator that includes git branch
+  (defun marginalia-annotate-project-file-enhanced (cand)
+    "Annotate project file CAND with enhanced information including git branch."
+    (let ((original-annotation (marginalia-annotate-project-file cand))
+          (branch (when-let ((proj (marginalia--project-root cand)))
+                    (doom-get-project-git-branch proj))))
+      (if (and branch (not (string-empty-p branch)))
+          (concat original-annotation 
+                  marginalia-separator
+                  (marginalia--field (format "[%s]" branch) 
+                                     :width 25
+                                     :face 'marginalia-documentation))
+        original-annotation)))
+
+  ;; Replace the default project-file annotator
+  (setf (alist-get 'project-file marginalia-annotator-registry)
+        '(marginalia-annotate-project-file-enhanced builtin none)))
+
+(add-to-list 'load-path (expand-file-name "lisp" doom-user-dir))
+(require 'lsp-oxc)
