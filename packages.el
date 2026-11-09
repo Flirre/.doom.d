@@ -1,57 +1,36 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
-;; To install a package with Doom you must declare them here and run 'doom sync'
-;; on the command line, then restart Emacs for the changes to take effect -- or
-;; use 'M-x doom/reload'.
+;; `:config default' declares drag-stuff only without evil.
+(package! drag-stuff :pin "6d06d846cd37c052d79acd0f372c13006aa7e7c8")
 
+(package! claude-code-ide
+  :recipe (:host github :repo "manzaltu/claude-code-ide.el")
+  :pin "50a3d55262805d7207889ed429ff30da96fbf68b")
 
-;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-;; (package! some-package)
+(package! agent-shell :pin "c788df02f071cc808c837435b65c8e72668b8e22")
+(package! acp :pin "2959da5fa8657da17a78ac6ceef303a50e3e69de")
+(package! shell-maker :pin "b28ee61a2533e408ed180662f83bb84fc8f84ba6")
 
-;; To install a package directly from a remote git repo, you must specify a
-;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
-;; https://github.com/radian-software/straight.el#the-recipe-format
-;; (package! another-package
-;;   :recipe (:host github :repo "username/repo"))
+;; The review of the Changes mod in magit.
+;; With no .elc, an edit in ~/dev/changes takes effect at the next start.
+(package! changes
+  :recipe (:local-repo "~/dev/changes"
+           :files ("emacs/*.el" (:exclude "emacs/*-test.el"))
+           :build (:not compile)))
 
-;; If the package you are trying to install does not contain a PACKAGENAME.el
-;; file, or is located in a subdirectory of the repo, you'll need to specify
-;; `:files' in the `:recipe':
-;; (package! this-package
-;;   :recipe (:host github :repo "username/repo"
-;;            :files ("some-file.el" "src/lisp/*.el")))
+(package! markdown-ts-appear :pin "d740ad4f59b8b34ea27a93a2b3b98fbdaf0cd467")
 
-;; If you'd like to disable a package included with Doom, you can do so here
-;; with the `:disable' property:
-;; (package! builtin-package :disable t)
+;; Structural / side-by-side diffs for the Azure DevOps review flow (opt-in view).
+(package! difftastic :pin "98c61e7dfac8d1ad4451423395da6bc14caa41df")
 
-;; You can override the recipe of a built in package without having to specify
-;; all the properties for `:recipe'. These will inherit the rest of its recipe
-;; from Doom or MELPA/ELPA/Emacsmirror:
-;; (package! builtin-package :recipe (:nonrecursive t))
-;; (package! builtin-package-2 :recipe (:repo "myfork/package"))
+;; `:tools lookup' declares `request', but no Doom module and no installed
+;; package ever loads it. It costs 7,645 B of the startup autoload file.
+(package! request :disable t)
 
-;; Specify a `:branch' to install a package from a particular branch or tag.
-;; This is required for some packages whose default branch isn't 'master' (which
-;; our package manager can't deal with; see radian-software/straight.el#279)
-;; (package! builtin-package :recipe (:branch "develop"))
+;; `:lang emacs-lisp' loads it with flycheck. It lints MELPA package headers.
+(package! flycheck-package :disable t)
 
-;; Use `:pin' to specify a particular commit to install.
-;; (package! builtin-package :pin "1a2b3c4d5e")
-
-
-;; Doom's packages are pinned to a specific commit and updated from release to
-;; release. The `unpin!' macro allows you to unpin single packages...
-;; (unpin! pinned-package)
-;; ...or multiple packages
-;; (unpin! pinned-package another-pinned-package)
-;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
-;; (unpin! t)
-(package! copilot
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
-(package! copilot-chat
-  :recipe (:host github :repo "chep/copilot-chat.el" :files ("*.el")))
-(package! evil-tutor)
-(package! drag-stuff)
 (package! ob-mermaid)
+;; `:lang sh' uses it to complete commands in shell-script buffers through bash.
+(package! bash-completion :disable t)
