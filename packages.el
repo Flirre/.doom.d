@@ -54,3 +54,4 @@
   :recipe (:host github :repo "chep/copilot-chat.el" :files ("*.el")))
 (package! evil-tutor)
 (package! drag-stuff)
+(package! ob-mermaid)

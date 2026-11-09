@@ -220,3 +220,26 @@
               (save-restriction
                 (widen)
                 (buffer-substring-no-properties (point-min) (point-max))))))
+;; ── Mermaid diagrams in org ──────────────────────────────────────────
+;; Render mermaid src blocks to SVG via ob-mermaid + mermaid-cli (mmdc).
+;; mmdc is installed via pacman (mermaid-cli); htmlLabels:false keeps node
+;; labels as pure SVG text (foreignObject HTML breaks Emacs image display).
+;; mmdc-emacs is a wrapper that injects xml:space="preserve" so librsvg
+;; (Emacs's SVG renderer) keeps the spaces between per-word tspans.
+
+(use-package! ob-mermaid
+  :after org
+  :config
+  (setq ob-mermaid-cli-path "/home/filiplindahl/.doom.d/mmdc-emacs"
+        ob-mermaid-default-config-file "/home/filiplindahl/.doom.d/mermaid-config.json"))
+
+(after! org
+  (defun +mermaid-render-all ()
+    "Execute all mermaid src blocks in the current buffer."
+    (interactive)
+    (org-babel-map-src-blocks nil
+      (when (string= lang "mermaid")
+        (org-babel-execute-src-block))))
+
+  (map! :map org-mode-map :localleader
+    "m" #'+mermaid-render-all))

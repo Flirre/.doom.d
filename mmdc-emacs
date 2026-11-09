@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Wrapper around mmdc (mermaid-cli) that post-processes SVG output for Emacs.
+#
+# mermaid renders node text as per-word <tspan> elements with leading spaces
+# (" the", " user"). librsvg (Emacs's SVG renderer) collapses leading
+# whitespace unless the SVG declares xml:space="preserve", which mermaid does
+# not emit — so "You, the user" displays as "You,theuser". Inject the
+# attribute into the first <svg> tag to preserve the spaces.
+set -euo pipefail
+
+OUT=""
+prev=""
+for arg in "$@"; do
+  if [[ "$prev" == "-o" ]]; then
+    OUT="$arg"
+  fi
+  prev="$arg"
+done
+
+/usr/bin/mmdc "$@"
+
+if [[ -n "$OUT" && "$OUT" == *.svg && -f "$OUT" ]]; then
+  sed -i '1{/xml:space=/!s/<svg/<svg xml:space="preserve"/}' "$OUT"
+fi
