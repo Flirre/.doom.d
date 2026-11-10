@@ -27,7 +27,7 @@
 ;; Review git diffs like a PR: counts, file tree, inline diffs, and comments.
 (package! diff-review
   :recipe (:host github :repo "xiaoxinghu/diff-review")
-  :pin "49cba29a28db940561ea9fe3ae156b827eebafae")
+  :pin "49cba292bb933e2a1a90f61145e29311636544ae")
 
 ;; `:tools lookup' declares `request', but no Doom module and no installed
 ;; package ever loads it. It costs 7,645 B of the startup autoload file.
