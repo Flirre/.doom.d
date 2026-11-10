@@ -226,3 +226,20 @@
   (map! :leader :desc "Changes review" "g v" #'changes)
   ;; magit-status and magit-dispatch show the review only after changes loads.
   (after! magit (require 'changes)))
+
+
+;;; Diff review
+
+;; Review git diffs like a PR: counts, file tree, inline diffs, and comments.
+(use-package! diff-review
+  :commands (diff-review-branch diff-review-find-file)
+  :init
+  (map! :leader
+        (:prefix ("g d" . "diff review")
+         :desc "Review branch"    "b" #'diff-review-branch
+         :desc "Find review file" "f" #'diff-review-find-file
+         :desc "Review branch"    "d" #'diff-review-branch)))
+
+(after! magit
+  (diff-review-magit-mode 1))
+

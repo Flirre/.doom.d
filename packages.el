@@ -24,6 +24,11 @@
 ;; Structural / side-by-side diffs for the Azure DevOps review flow (opt-in view).
 (package! difftastic :pin "98c61e7dfac8d1ad4451423395da6bc14caa41df")
 
+;; Review git diffs like a PR: counts, file tree, inline diffs, and comments.
+(package! diff-review
+  :recipe (:host github :repo "xiaoxinghu/diff-review")
+  :pin "49cba29a28db940561ea9fe3ae156b827eebafae")
+
 ;; `:tools lookup' declares `request', but no Doom module and no installed
 ;; package ever loads it. It costs 7,645 B of the startup autoload file.
 (package! request :disable t)
